@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/js/snowflakes.min.js"></script>
   <style>
   body {
       font: 20px Montserrat, sans-serif;
@@ -52,6 +53,16 @@
   </style>
 </head>
 <body>
+
+<!-- Snowflakes -->
+<script>
+	var d = new Date();
+	var m = d.getMonth();
+	if(m == 11) {
+		Snowflakes( { count: 100 } );
+	}
+</script>
+
 
 <!-- Navbar -->
 <nav class="navbar navbar-default">
