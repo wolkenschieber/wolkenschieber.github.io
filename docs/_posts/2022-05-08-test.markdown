@@ -1,0 +1,66 @@
+---
+title:  Test
+tags: test, markdown
+layout: post
+date:   2022-05-08 18:45:50 +0200
+categories: test markdown
+---
+
+# mermaid
+
+```mermaid
+stateDiagram   
+    Browser --> Compose : http#58;//localhost#58;8080
+    state Compose {   
+      mitmproxy --> changedetection: http#58;//changedetection#58;5000
+    }
+    Compose --> Gateway
+```   
+
+# external
+
+{%youtube aqz-KE-bpKQ %}
+
+# yaml
+
+```yaml
+#---
+version: "3.9"
+services:
+  checkmk:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.checkmk.entrypoints=web"
+      - "traefik.http.routers.checkmk.rule=PathPrefix(`/cmk`) || PathPrefix(`/cmk/`)"
+      - "traefik.http.services.checkmk.loadbalancer.server.port=5000"
+    image: checkmk/check-mk-raw:2.0.0-latest
+    container_name: checkmk
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./sites:/omd/sites
+    tmpfs:
+      - /opt/omd/sites/cmk/tmp:uid=1000,gid=1000
+    networks:
+      - proxy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+    proxy:
+        external: true
+```
+
+Once Traefik and checkmk spin up, the server will be available at `http://<server>/cmk`. Its initial credentials will be written to the log on startup.
+
+## Adding hosts to the monitoring
+
+The [Getting started](https://docs.checkmk.com/latest/en/checkmk_getting_started.html#add_server) outlines who to add hosts to the monitoring. It's tricky to read, but it will work. Keep in mind that `localhost` will refer to the container and not the machine running the container. 
+
+To monitor this machine, an agent needs to be [installed](https://docs.checkmk.com/latest/en/checkmk_getting_started.html#install_agent). This agent can be added to checkmk host by using the hostname `host.docker.internal`.
+
+
+
