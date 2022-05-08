@@ -19,7 +19,10 @@ stateDiagram
 
 # external
 
-{%youtube aqz-KE-bpKQ %}
+
+<!-- {%youtube aqz-KE-bpKQ %}
+![](https://www.youtube.com/watch?v=Ptk_1Dc2iPY)
+-->
 
 # yaml
 
